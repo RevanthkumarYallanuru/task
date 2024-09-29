@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Tracker</title>
+    <script src="https://kit.fontawesome.com/f26cdbc509.js" crossorigin="anonymous"></script>
+<style>
+
+/* inpage css*/
+        *{
+            margin: 0px;
+            border:0px;
+            padding: 0px;
+            
+        }
+        .container
+        {
+            width: 100%;
+            min-height: 100vh;
+            background: linear-gradient(124deg,#153677,#4e085f);
+            padding:10px;
+             
+        }
+        .todoapp{
+
+            width: 100%;
+            max-width: 540px;
+            background: #fff;
+            margin:100px auto 20px;
+            padding: 40px 30px 70px;
+            border-radius:10px;          
+        }
+
+        .todoapp h2
+        {
+            color:#002765;
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .todoapp h2 img{
+            width: 30px;
+            margin-left: 10px;
+
+        }
+        .row
+        {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #edeef0;
+            border-radius: 30px;
+            padding-left: 20px;
+            margin-bottom: 25px;
+
+        }
+        input{
+            flex: 1;
+            border: none;
+            outline: none;
+            padding:10px;
+            font-weight: 15px;
+            background-color:#fff;
+            border-radius: 30px;
+
+        }
+        button{
+            border: none;
+            outline: none;
+            padding: 16px 50px ;
+            background: #ec6c22;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 40px;
+        }
+        ul li{
+
+            list-style: none;
+            font-size: 17px;
+            padding:12px 8px 12px 50px;
+            user-select: none;
+            cursor: pointer;
+            position: relative;
+            border-radius: 30px;
+            margin-top: 3px;
+           
+        }
+        ul li::before{
+            content:'';
+            height: 28px;
+            width: 28px;
+            position: absolute;
+            left: 10px;
+            border-radius: 50%;
+            background-image: url(/images/unchecked.png);
+            background-size: cover;
+            background-position: center;
+            top: 8px;
+  }
+    ul li.checked
+    {
+        color:#555;
+        text-decoration: line-through;
+        background-color: #ec6c22;
+        
+    }
+    ul li.checked::before
+    {
+        background-image: url(/images/checked.png);
+        
+    }
+    ul li span{
+        position: absolute;
+        right: 3px;
+        top: 2px;
+        width:40px;
+        height: 40px;
+        font-size: 22px;
+        color: #555;
+        text-align: center;
+        line-height: 40px;
+        border-radius: 50%;
+
+    }
+    ul li span:hover{
+        background-color:#edeef0;
+    }
+
+</style>
+
+</head>
+<body>
+    <div class="container">
+        <div class="todoapp">
+            <h2>
+                Task Tracker:
+                <img src="/images/icon.png">
+            </h2>
+            <div class="row">
+                <input id="inputbox" placeholder="enter ur task">
+                <button onclick="addTask()">Add</button>
+            </div>
+            <ul id="listItems">
+               <!--<li class="checked"> taks1</li>
+                <li> taks1</li>
+                <li> taks1</li>
+                <li> taks1</li>--> 
+            </ul>
+        </div>
+       
+       
+     </div>    
+<script>
+
+        const inputbox=document.getElementById('inputbox');
+        const lv=document.getElementById('listItems');
+
+    function addTask()
+    {     
+        if(inputbox.value==='')
+        {
+            alert(' you should write something');
+        }
+        else
+        {
+           let li= document.createElement('li');
+            li.textContent=inputbox.value;
+            lv.appendChild(li);
+            savedata();
+            inputbox.value='';
+            let span=document.createElement('span');
+            span.innerHTML='<i class="fa-solid fa-trash"></i>';
+            li.appendChild(span);
+            savedata();
+        }   }
+
+      lv.addEventListener('click',function(e){
+
+        if(e.target.tagName==='LI')
+        {
+            e.target.classList.toggle('checked');
+            savedata();
+        }
+
+        else if(e.target.tagName=='I')
+            {
+                e.target.parentElement.parentElement.remove();
+                savedata();
+            }
+      },false);
+
+function savedata()
+{
+    localStorage.setItem("dat",listItems.innerHTML);
+}
+ function show()
+ {
+    listItems.innerHTML=localStorage.getItem('dat');
+ }
+ show();
+</script>
+</body>
+</html>
